@@ -448,7 +448,7 @@
                         <div class="card card-round">
                             <div class="card-header">
                                 <div class="card-head-row card-tools-still-right">
-                                    <div class="card-title">Daily leads</div>
+                                    <div class="card-title">All leads</div>
                                     <div class="card-tools">
                                         <div class="dropdown">
                                             <button class="btn btn-icon btn-clean me-0" type="button"
