@@ -436,7 +436,7 @@
                 <div class="page-inner">
                     <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
                         <div>
-                            <h3 class="fw-bold mb-3">Leads</h3>
+                            <h3 class="fw-bold mb-3">Leads Page</h3>
                         </div>
                         <div class="ms-md-auto py-2 py-md-0">
                             <a href="#" class="btn btn-secondary btn-round me-2" data-toggle="modal"
@@ -448,7 +448,7 @@
                         <div class="card card-round">
                             <div class="card-header">
                                 <div class="card-head-row card-tools-still-right">
-                                    <div class="card-title">All leads</div>
+                                    <div class="card-title">All Leads</div>
                                     <div class="card-tools">
                                         <div class="dropdown">
                                             <button class="btn btn-icon btn-clean me-0" type="button"
