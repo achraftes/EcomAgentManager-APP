@@ -6,6 +6,7 @@
     <title>Kaiadmin - Bootstrap 5 Admin Dashboard</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
     <link rel="icon" href="img/kaiadmin/favicon.ico" type="image/x-icon" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Fonts and icons -->
     <script src="js/plugin/webfont/webfont.min.js"></script>
@@ -36,6 +37,31 @@
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="css/demo.css" />
+
+    <style>
+        /* file upload button */
+        input[type="file"]::file-selector-button {
+            border-radius: 4px;
+            padding: 0 16px;
+            height: 40px;
+            cursor: pointer;
+            background-color: white;
+            border: 1px solid rgba(0, 0, 0, 0.16);
+            box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.05);
+            margin-right: 16px;
+            transition: background-color 200ms;
+        }
+
+        /* file upload button hover state */
+        input[type="file"]::file-selector-button:hover {
+            background-color: #f3f4f6;
+        }
+
+        /* file upload button active state */
+        input[type="file"]::file-selector-button:active {
+            background-color: #e5e7eb;
+        }
+    </style>
 </head>
 
 <body>
@@ -66,7 +92,7 @@
                 <div class="sidebar-content">
                     <ul class="nav nav-secondary">
                         <li class="nav-item active">
-                            <a href="{{ route("dashboard") }}" class="collapsed">
+                            <a href="{{ route('dashboard') }}" class="collapsed">
                                 <i class="fas fa-home"></i>
                                 <p>Dashboard</p>
                             </a>
@@ -78,25 +104,25 @@
                             <h4 class="text-section">Pages</h4>
                         </li>
                         <li class="nav-item">
-                            <a  href="{{ route("clients") }}">
+                            <a href="{{ route('clients') }}">
                                 <i class="fas fa-layer-group"></i>
                                 <p>Client</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a  href="{{ route("products") }}">
+                            <a href="{{ route('products') }}">
                                 <i class="fas fa-th-list"></i>
                                 <p>Products</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a  href="{{ route("mediaBuyers") }}">
+                            <a href="{{ route('mediaBuyers') }}">
                                 <i class="fas fa-pen-square"></i>
                                 <p>Media Buyer</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route("leads") }}">
+                            <a href="{{ route('leads') }}">
                                 <i class="fas fa-table"></i>
                                 <p>Leads</p>
                             </a>
@@ -133,7 +159,32 @@
                 <!-- Navbar Header -->
                 <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
                     <div class="container-fluid">
-                        <ul class="navbar-nav topbar-nav mx-auto align-items-center">
+                        <nav
+                            class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <button type="submit" class="btn btn-search pe-1">
+                                        <i class="fa fa-search search-icon"></i>
+                                    </button>
+                                </div>
+                                <input type="text" placeholder="Search for lead ..." class="form-control" />
+                            </div>
+                        </nav>
+
+                        <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+                            <li class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                                    role="button" aria-expanded="false" aria-haspopup="true">
+                                    <i class="fa fa-search"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-search animated fadeIn">
+                                    <form class="navbar-left navbar-form nav-search">
+                                        <div class="input-group">
+                                            <input type="text" placeholder="Search ..." class="form-control" />
+                                        </div>
+                                    </form>
+                                </ul>
+                            </li>
                             <li class="nav-item topbar-icon dropdown hidden-caret">
                                 <a class="nav-link dropdown-toggle" href="#" id="messageDropdown"
                                     role="button" data-bs-toggle="dropdown" aria-haspopup="true"
@@ -385,490 +436,249 @@
                 <div class="page-inner">
                     <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
                         <div>
-                            <h3 class="fw-bold mb-3">Dashboard</h3>
+                            <h3 class="fw-bold mb-3">Leads</h3>
+                        </div>
+                        <div class="ms-md-auto py-2 py-md-0">
+                            <a href="#" class="btn btn-secondary btn-round me-2" data-toggle="modal"
+                                data-target="#addLeadModal">Add Lead</a>
+                            <a href="#" class="btn btn-primary btn-round" id="exportLeadBtn">Export Lead</a>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-6 col-md-3">
-                            <div class="card card-stats card-round">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-icon">
-                                            <div class="icon-big text-center icon-primary bubble-shadow-small">
-                                                <i class="fas fa-users"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col col-stats ms-3 ms-sm-0">
-                                            <div class="numbers">
-                                                <p class="card-category">Clients</p>
-                                                <h4 class="card-title">1,294</h4>
+                        <div class="card card-round">
+                            <div class="card-header">
+                                <div class="card-head-row card-tools-still-right">
+                                    <div class="card-title">Daily leads</div>
+                                    <div class="card-tools">
+                                        <div class="dropdown">
+                                            <button class="btn btn-icon btn-clean me-0" type="button"
+                                                id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-h"></i>
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" href="#">Action</a>
+                                                <a class="dropdown-item" href="#">Another action</a>
+                                                <a class="dropdown-item" href="#">Something else here</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-sm-6 col-md-3">
-                            <div class="card card-stats card-round">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-icon">
-                                            <div class="icon-big text-center icon-info bubble-shadow-small">
-                                                <i class="fas fa-user-check"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col col-stats ms-3 ms-sm-0">
-                                            <div class="numbers">
-                                                <p class="card-category">Media Buyers</p>
-                                                <h4 class="card-title">1303</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-3">
-                            <div class="card card-stats card-round">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-icon">
-                                            <div class="icon-big text-center icon-success bubble-shadow-small">
-                                                <i class="fas fa-luggage-cart"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col col-stats ms-3 ms-sm-0">
-                                            <div class="numbers">
-                                                <p class="card-category">Sales</p>
-                                                <h4 class="card-title">$ 1,345</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-3">
-                            <div class="card card-stats card-round">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-icon">
-                                            <div class="icon-big text-center icon-secondary bubble-shadow-small">
-                                                <i class="far fa-check-circle"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col col-stats ms-3 ms-sm-0">
-                                            <div class="numbers">
-                                                <p class="card-category">Leads</p>
-                                                <h4 class="card-title">576</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="card card-round">
-                                <div class="card-header">
-                                    <div class="card-head-row">
-                                        <div class="card-title">Entities Statistics</div>
-                                        <div class="card-tools">
-                                            <a href="#" class="btn btn-label-success btn-round btn-sm me-2">
-                                                <span class="btn-label">
-                                                    <i class="fa fa-pencil"></i>
-                                                </span>
-                                                Export
-                                            </a>
-                                            <a href="#" class="btn btn-label-info btn-round btn-sm">
-                                                <span class="btn-label">
-                                                    <i class="fa fa-print"></i>
-                                                </span>
-                                                Print
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="chart-container" style="min-height: 375px">
-                                        <canvas id="statisticsChart"></canvas>
-                                    </div>
-                                    <div id="myChartLegend"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card card-primary card-round">
-                                <div class="card-header">
-                                    <div class="card-head-row">
-                                        <div class="card-title">Daily Sales</div>
-                                        <div class="card-tools">
-                                            <div class="dropdown">
-                                                <button class="btn btn-sm btn-label-light dropdown-toggle"
-                                                    type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                    Export
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item" href="#">Action</a>
-                                                    <a class="dropdown-item" href="#">Another action</a>
-                                                    <a class="dropdown-item" href="#">Something else here</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-category">March 25 - April 02</div>
-                                </div>
-                                <div class="card-body pb-0">
-                                    <div class="mb-4 mt-2">
-                                        <h1>$4,578.58</h1>
-                                    </div>
-                                    <div class="pull-in">
-                                        <canvas id="dailySalesChart"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card card-round">
-                                <div class="card-body pb-0">
-                                    <div class="h1 fw-bold float-end text-primary">+5%</div>
-                                    <h2 class="mb-2">17</h2>
-                                    <p class="text-muted">Media buyers</p>
-                                    <div class="pull-in sparkline-fix">
-                                        <div id="lineChart"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {{-- <div class="row">
-                        <div class="col-md-12">
-                            <div class="card card-round">
-                                <div class="card-header">
-                                    <div class="card-head-row card-tools-still-right">
-                                        <h4 class="card-title">Users Geolocation</h4>
-                                        <div class="card-tools">
-                                            <button class="btn btn-icon btn-link btn-primary btn-xs">
-                                                <span class="fa fa-angle-down"></span>
-                                            </button>
-                                            <button class="btn btn-icon btn-link btn-primary btn-xs btn-refresh-card">
-                                                <span class="fa fa-sync-alt"></span>
-                                            </button>
-                                            <button class="btn btn-icon btn-link btn-primary btn-xs">
-                                                <span class="fa fa-times"></span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <p class="card-category">
-                                        Map of the distribution of users around the world
-                                    </p>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="table-responsive table-hover table-sales">
-                                                <table class="table">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="flag">
-                                                                    <img src="img/flags/id.png" alt="indonesia" />
-                                                                </div>
-                                                            </td>
-                                                            <td>Indonesia</td>
-                                                            <td class="text-end">2.320</td>
-                                                            <td class="text-end">42.18%</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="flag">
-                                                                    <img src="img/flags/us.png" alt="united states" />
-                                                                </div>
-                                                            </td>
-                                                            <td>USA</td>
-                                                            <td class="text-end">240</td>
-                                                            <td class="text-end">4.36%</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="flag">
-                                                                    <img src="img/flags/au.png" alt="australia" />
-                                                                </div>
-                                                            </td>
-                                                            <td>Australia</td>
-                                                            <td class="text-end">119</td>
-                                                            <td class="text-end">2.16%</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="flag">
-                                                                    <img src="img/flags/ru.png" alt="russia" />
-                                                                </div>
-                                                            </td>
-                                                            <td>Russia</td>
-                                                            <td class="text-end">1.081</td>
-                                                            <td class="text-end">19.65%</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="flag">
-                                                                    <img src="img/flags/cn.png" alt="china" />
-                                                                </div>
-                                                            </td>
-                                                            <td>China</td>
-                                                            <td class="text-end">1.100</td>
-                                                            <td class="text-end">20%</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="flag">
-                                                                    <img src="img/flags/br.png" alt="brazil" />
-                                                                </div>
-                                                            </td>
-                                                            <td>Brasil</td>
-                                                            <td class="text-end">640</td>
-                                                            <td class="text-end">11.63%</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mapcontainer">
-                                                <div id="world-map" class="w-100" style="height: 300px"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card card-round">
-                                <div class="card-body">
-                                    <div class="card-head-row card-tools-still-right">
-                                        <div class="card-title">New Media Buyers</div>
-                                        <div class="card-tools">
-                                            <div class="dropdown">
-                                                <button class="btn btn-icon btn-clean me-0" type="button"
-                                                    id="dropdownMenuButton" data-bs-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-h"></i>
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item" href="#">Action</a>
-                                                    <a class="dropdown-item" href="#">Another action</a>
-                                                    <a class="dropdown-item" href="#">Something else here</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-list py-4">
-                                        <div class="item-list">
-                                            <div class="avatar">
-                                                <img src="img/jm_denis.jpg" alt="..."
-                                                    class="avatar-img rounded-circle" />
-                                            </div>
-                                            <div class="info-user ms-3">
-                                                <div class="username">Jimmy Denis</div>
-                                                <div class="status">Graphic Designer</div>
-                                            </div>
-                                            <button class="btn btn-icon btn-link op-8 me-1">
-                                                <i class="far fa-envelope"></i>
-                                            </button>
-                                            <button class="btn btn-icon btn-link btn-danger op-8">
-                                                <i class="fas fa-ban"></i>
-                                            </button>
-                                        </div>
-                                        <div class="item-list">
-                                            <div class="avatar">
-                                                <span class="avatar-title rounded-circle border border-white">CF</span>
-                                            </div>
-                                            <div class="info-user ms-3">
-                                                <div class="username">Chandra Felix</div>
-                                                <div class="status">Sales Promotion</div>
-                                            </div>
-                                            <button class="btn btn-icon btn-link op-8 me-1">
-                                                <i class="far fa-envelope"></i>
-                                            </button>
-                                            <button class="btn btn-icon btn-link btn-danger op-8">
-                                                <i class="fas fa-ban"></i>
-                                            </button>
-                                        </div>
-                                        <div class="item-list">
-                                            <div class="avatar">
-                                                <img src="img/talha.jpg" alt="..."
-                                                    class="avatar-img rounded-circle" />
-                                            </div>
-                                            <div class="info-user ms-3">
-                                                <div class="username">Talha</div>
-                                                <div class="status">Front End Designer</div>
-                                            </div>
-                                            <button class="btn btn-icon btn-link op-8 me-1">
-                                                <i class="far fa-envelope"></i>
-                                            </button>
-                                            <button class="btn btn-icon btn-link btn-danger op-8">
-                                                <i class="fas fa-ban"></i>
-                                            </button>
-                                        </div>
-                                        <div class="item-list">
-                                            <div class="avatar">
-                                                <img src="img/chadengle.jpg" alt="..."
-                                                    class="avatar-img rounded-circle" />
-                                            </div>
-                                            <div class="info-user ms-3">
-                                                <div class="username">Chad</div>
-                                                <div class="status">CEO Zeleaf</div>
-                                            </div>
-                                            <button class="btn btn-icon btn-link op-8 me-1">
-                                                <i class="far fa-envelope"></i>
-                                            </button>
-                                            <button class="btn btn-icon btn-link btn-danger op-8">
-                                                <i class="fas fa-ban"></i>
-                                            </button>
-                                        </div>
-                                        <div class="item-list">
-                                            <div class="avatar">
-                                                <span
-                                                    class="avatar-title rounded-circle border border-white bg-primary">H</span>
-                                            </div>
-                                            <div class="info-user ms-3">
-                                                <div class="username">Hizrian</div>
-                                                <div class="status">Web Designer</div>
-                                            </div>
-                                            <button class="btn btn-icon btn-link op-8 me-1">
-                                                <i class="far fa-envelope"></i>
-                                            </button>
-                                            <button class="btn btn-icon btn-link btn-danger op-8">
-                                                <i class="fas fa-ban"></i>
-                                            </button>
-                                        </div>
-                                        <div class="item-list">
-                                            <div class="avatar">
-                                                <span
-                                                    class="avatar-title rounded-circle border border-white bg-secondary">F</span>
-                                            </div>
-                                            <div class="info-user ms-3">
-                                                <div class="username">Farrah</div>
-                                                <div class="status">Marketing</div>
-                                            </div>
-                                            <button class="btn btn-icon btn-link op-8 me-1">
-                                                <i class="far fa-envelope"></i>
-                                            </button>
-                                            <button class="btn btn-icon btn-link btn-danger op-8">
-                                                <i class="fas fa-ban"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card card-round">
-                                <div class="card-header">
-                                    <div class="card-head-row card-tools-still-right">
-                                        <div class="card-title">Daily leads</div>
-                                        <div class="card-tools">
-                                            <div class="dropdown">
-                                                <button class="btn btn-icon btn-clean me-0" type="button"
-                                                    id="dropdownMenuButton" data-bs-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-h"></i>
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item" href="#">Action</a>
-                                                    <a class="dropdown-item" href="#">Another action</a>
-                                                    <a class="dropdown-item" href="#">Something else here</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-body p-0">
-                                    <div class="table-responsive">
-                                        <!-- Projects table -->
-                                        <table class="table align-items-center mb-0">
-                                            <thead class="thead-light">
-                                                <tr>
-                                                    <th scope="col">Order ID</th>
-                                                    <th scope="col" class="text-center">Method Payment</th>
-                                                    <th scope="col" class="text-center">Date & Time</th>
-                                                    <th scope="col" class="text-center">Amount</th>
-                                                    <th scope="col" class="text-center">Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="text-center">id #501</td>
-                                                    <td class="text-center">Paypal</td>
-                                                    <td class="text-center">Mar 19, 2020, 2.45pm</td>
-                                                    <td class="text-center">$250.00</td>
-                                                    <td class="text-center">
-                                                        <span class="badge badge-success">Active</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center">id #501</td>
-                                                    <td class="text-center">Paypal</td>
-                                                    <td class="text-center">Mar 19, 2020, 2.45pm</td>
-                                                    <td class="text-center">$250.00</td>
-                                                    <td class="text-center">
-                                                        <span class="badge badge-success">Active</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center">id #501</td>
-                                                    <td class="text-center">Paypal</td>
-                                                    <td class="text-center">Mar 19, 2020, 2.45pm</td>
-                                                    <td class="text-center">$250.00</td>
-                                                    <td class="text-center">
-                                                        <span class="badge badge-danger">canceled</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center">id #501</td>
-                                                    <td class="text-center">Paypal</td>
-                                                    <td class="text-center">Mar 19, 2020, 2.45pm</td>
-                                                    <td class="text-center">$250.00</td>
-                                                    <td class="text-center">
-                                                        <span class="badge badge-success">Active</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center">id #501</td>
-                                                    <td class="text-center">Paypal</td>
-                                                    <td class="text-center">Mar 19, 2020, 2.45pm</td>
-                                                    <td class="text-center">$250.00</td>
-                                                    <td class="text-center">
-                                                        <span class="badge badge-success">Active</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center">id #501</td>
-                                                    <td class="text-center">Paypal</td>
-                                                    <td class="text-center">Mar 19, 2020, 2.45pm</td>
-                                                    <td class="text-center">$250.00</td>
-                                                    <td class="text-center">
-                                                        <span class="badge badge-secondary">No response</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center">id #501</td>
-                                                    <td class="text-center">Paypal</td>
-                                                    <td class="text-center">Mar 19, 2020, 2.45pm</td>
-                                                    <td class="text-center">$250.00</td>
-                                                    <td class="text-center">
-                                                        <span class="badge badge-success">Active</span>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <!-- Projects table -->
+                                    <table class="table align-items-center mb-0">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col">Order ID</th>
+                                                <th scope="col" class="text-center">Method Payment</th>
+                                                <th scope="col" class="text-center">Date & Time</th>
+                                                <th scope="col" class="text-center">Product</th>
+                                                <th scope="col" class="text-center">Client</th>
+                                                <th scope="col" class="text-center">Amount</th>
+                                                <th scope="col" class="text-center">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-start">id #501</td>
+                                                <td class="text-center">Paypal</td>
+                                                <td class="text-center">Mar 19, 2020, 2.45pm</td>
+                                                <td class="text-center">product..</td>
+                                                <td class="text-center">client..</td>
+                                                <td class="text-center">$250.00</td>
+                                                <td class="text-center">
+                                                    <span class="badge badge-success">Active</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-start">id #501</td>
+                                                <td class="text-center">Paypal</td>
+                                                <td class="text-center">Mar 19, 2020, 2.45pm</td>
+                                                <td class="text-center">product..</td>
+                                                <td class="text-center">client..</td>
+                                                <td class="text-center">$250.00</td>
+                                                <td class="text-center">
+                                                    <span class="badge badge-success">Active</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-start">id #501</td>
+                                                <td class="text-center">Paypal</td>
+                                                <td class="text-center">Mar 19, 2020, 2.45pm</td>
+                                                <td class="text-center">product..</td>
+                                                <td class="text-center">client..</td>
+                                                <td class="text-center">$250.00</td>
+                                                <td class="text-center">
+                                                    <span class="badge badge-danger">canceled</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-start">id #501</td>
+                                                <td class="text-center">Paypal</td>
+                                                <td class="text-center">Mar 19, 2020, 2.45pm</td>
+                                                <td class="text-center">product..</td>
+                                                <td class="text-center">client..</td>
+                                                <td class="text-center">$250.00</td>
+                                                <td class="text-center">
+                                                    <span class="badge badge-success">Active</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-start">id #501</td>
+                                                <td class="text-center">Paypal</td>
+                                                <td class="text-center">Mar 19, 2020, 2.45pm</td>
+                                                <td class="text-center">product..</td>
+                                                <td class="text-center">client..</td>
+                                                <td class="text-center">$250.00</td>
+                                                <td class="text-center">
+                                                    <span class="badge badge-success">Active</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-start">id #501</td>
+                                                <td class="text-center">Paypal</td>
+                                                <td class="text-center">Mar 19, 2020, 2.45pm</td>
+                                                <td class="text-center">product..</td>
+                                                <td class="text-center">client..</td>
+                                                <td class="text-center">$250.00</td>
+                                                <td class="text-center">
+                                                    <span class="badge badge-secondary">No response</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-start">id #501</td>
+                                                <td class="text-center">Paypal</td>
+                                                <td class="text-center">Mar 19, 2020, 2.45pm</td>
+                                                <td class="text-center">product..</td>
+                                                <td class="text-center">client..</td>
+                                                <td class="text-center">$250.00</td>
+                                                <td class="text-center">
+                                                    <span class="badge badge-success">Active</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            {{-- modal form add Lead --}}
+            <div class="modal fade" id="addLeadModal" tabindex="-1" role="dialog"
+                aria-labelledby="addLeadModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addLeadModalLabel">Add Lead</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="inputOrderId">Order id</label>
+                                    <input type="text" class="form-control" id="inputOrderId"
+                                        placeholder="Enter order id">
+                                </div>
+                                <div class="form-group">
+                                    <label for="imputOrderDate">Orde Date</label>
+                                    <input type="date" class="form-control" id="imputOrderDate"
+                                        placeholder="Enter Order Date">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPayment">Select Payment Method</label>
+                                    <select class="form-control" id="inputPayment">
+                                        <option value="">--select--</option>
+                                        <option value="paypal">PayPal</option>
+                                        <option value="orange_money">Orange Money</option>
+                                        <option value="cod">Cash on Delivery (COD)</option>
+                                    </select>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="border rounded p-3">
+                                        <label for="imputClient">Select Client</label>
+                                        <select class="form-control" id="imputClient">
+                                            <option value="">--select--</option>
+                                            <option value="Client 1">Client 1</option>
+                                            <option value="Client 2">Client 2</option>
+                                            <option value="Client 3">Client 3</option>
+                                            <option value="Client 4">Client 4</option>
+                                            <option value="Client 5">Client 5</option>
+                                        </select>
+                                        <div class="row" style="padding-top: 1rem">
+                                            <div class="col-md-6">
+                                                <input type="text" class="form-control"
+                                                    placeholder="Phone client">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input type="text" class="form-control"
+                                                    placeholder="Adresse client">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="border rounded p-3 mb-4">
+                                        <label for="inputProduct">Select Product</label>
+                                        <select class="form-control mb-3" id="inputProduct">
+                                            <option value="" disabled selected>--select--</option>
+                                            <option value="Product 1">Product 1</option>
+                                            <option value="Product 2">Product 2</option>
+                                            <option value="Product 3">Product 3</option>
+                                            <option value="Product 4">Product 4</option>
+                                            <option value="Product 5">Product 5</option>
+                                        </select>
+                                        <div class="row mb-3">
+                                            <div class="col-md-4">
+                                                <label for="inputQuantity">Quantity</label>
+                                                <input type="number" class="form-control" id="inputQuantity"
+                                                    placeholder="Enter quantity">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="inputPrice">Price</label>
+                                                <input type="text" class="form-control" id="inputPrice"
+                                                    placeholder="Product price" readonly>
+                                            </div>
+                                            <div class="col-md-4 d-flex align-items-end">
+                                                <button type="button" class="btn btn-success btn-sm ms-auto"
+                                                    id="addProductBtn">Add Product</button>
+                                                <button type="button" class="btn btn-danger btn-sm ms-2"
+                                                    id="removeProductBtn" disabled>Remove Product</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="imputState">Select State</label>
+                                    <select class="form-control" id="imputState">
+                                        <option value="" disable>--select--</option>
+                                        <option value="active">active</option>
+                                        <option value="no response">no response</option>
+                                        <option value="canceled">canceled</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputFile">Upload CSV File</label>
+                                    <input type="file" class="form-control-file" id="inputFile">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save Lead</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- end modal form add lead --}}
 
             <footer class="footer">
                 <div class="container-fluid d-flex justify-content-between">
@@ -962,6 +772,11 @@
         </div>
         <!-- End Custom template -->
     </div>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom JS for Export Lead -->
     <!--   Core JS Files   -->
     <script src="js/core/jquery-3.7.1.min.js"></script>
     <script src="js/core/popper.min.js"></script>
@@ -1026,6 +841,68 @@
             fillColor: "rgba(255, 165, 52, .14)",
         });
     </script>
+
+    {{-- ! ADDITIONNAL SCRIPTS for adding product --}}
+    <!-- Ensure script is placed at the end of the body or in a DOMContentLoaded event -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('addProductBtn').addEventListener('click', function() {
+                const product = document.getElementById('inputProduct').value;
+                const quantity = document.getElementById('inputQuantity').value;
+                const price = document.getElementById('inputPrice')
+                .value; // Dummy value, you can modify this based on your actual logic
+
+                if (product && quantity && price) {
+                    const productItem = `
+                    <div class="row mb-2 product-item">
+                        <div class="col-md-4">
+                            <span>${product}</span>
+                        </div>
+                        <div class="col-md-2">
+                            <span>${quantity}</span>
+                        </div>
+                        <div class="col-md-2">
+                            <span>${price}</span>
+                        </div>
+                        <div class="col-md-4 d-flex align-items-end">
+                            <button type="button" class="btn btn-danger btn-sm ms-auto remove-product-btn">Remove</button>
+                        </div>
+                    </div>
+                `;
+
+                    document.getElementById('productsContainer').insertAdjacentHTML('beforeend',
+                        productItem);
+                    document.getElementById('inputProduct').value = '';
+                    document.getElementById('inputQuantity').value = '';
+                    document.getElementById('inputPrice').value = '';
+
+                    document.getElementById('removeProductBtn').disabled = false;
+
+                    const removeButtons = document.querySelectorAll('.remove-product-btn');
+                    removeButtons.forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            this.closest('.product-item').remove();
+                            if (document.querySelectorAll('.product-item').length === 0) {
+                                document.getElementById('removeProductBtn').disabled = true;
+                            }
+                        });
+                    });
+                }
+            });
+
+            document.getElementById('removeProductBtn').addEventListener('click', function() {
+                const productItems = document.querySelectorAll('.product-item');
+                if (productItems.length > 0) {
+                    productItems[productItems.length - 1].remove();
+                }
+                if (document.querySelectorAll('.product-item').length === 0) {
+                    this.disabled = true;
+                }
+            });
+        });
+    </script>
+
+
 </body>
 
 </html>
