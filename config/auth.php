@@ -35,12 +35,28 @@ return [
     |
     */
 
-    'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
+   'guards' => [
+    'web' => [
+        'driver' => 'session',
+        'provider' => 'users', // This should match the provider for your users (including agents)
     ],
+    'agent' => [
+        'driver' => 'session',
+        'provider' => 'agents',
+    ],
+],
+
+'providers' => [
+    'users' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\User::class,
+    ],
+    'agents' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\Agent::class,
+    ],
+],
+
 
     /*
     |--------------------------------------------------------------------------
@@ -59,17 +75,16 @@ return [
     |
     */
 
-    'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
-        ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+ 'providers' => [
+    'users' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\User::class,
     ],
+    'agents' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\Agent::class,
+    ],
+],
 
     /*
     |--------------------------------------------------------------------------
