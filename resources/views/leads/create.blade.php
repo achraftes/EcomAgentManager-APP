@@ -17,11 +17,11 @@
                     <form action="{{ route('leads.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                         @csrf
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <!-- Autres champs du formulaire -->
+                            <!-- Other form fields -->
                             <div class="form-group">
                                 <label for="mediaBuyer" class="block text-sm font-medium text-gray-700">Media Buyer</label>
                                 <select id="mediaBuyer" name="media_buyer_id" class="mt-1 block w-full text-sm text-gray-500 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                                    <option value="" disabled selected>Select Agent</option>
+                                    <option value="" disabled selected>Select Media Buyer</option>
                                     @foreach($mediaBuyers as $mediaBuyer)
                                         <option value="{{ $mediaBuyer->id }}">{{ $mediaBuyer->full_name }}</option>
                                     @endforeach

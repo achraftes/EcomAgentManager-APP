@@ -9,7 +9,7 @@ class Agent extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','user_id',
     ];
 
     protected $hidden = [
@@ -23,5 +23,9 @@ class Agent extends Authenticatable
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function leads()
+    {
+        return $this->hasMany(Lead::class);
     }
 }

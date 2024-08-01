@@ -4,14 +4,27 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Client;
+use App\Models\Lead;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $clients = Client::all();
+        if (auth()->user()->isAdmin()) {
+            // Si l'utilisateur est un administrateur, afficher tous les clients
+            $clients = Lead::all();
+        } else {
+            // Sinon, afficher uniquement les clients assignés à l'agent connecté
+            $agentId = auth()->user()->agent->id;
+            $clients = Lead::where('agent_id', $agentId)->get();
+        }
+    
         return view('clients.index', compact('clients'));
     }
+    
+    
 
     public function store(Request $request)
     {
@@ -37,5 +50,23 @@ class ClientController extends Controller
         $client->delete();
 
         return redirect()->route('clients.index')->with('success', 'Client deleted successfully.');
+    }
+
+
+    public function clientsAss()
+    {
+        $user = Auth::user();
+
+        if ($user && $user->role == 'agent') {
+            $clients = Client::whereIn('full_name', function($query) use ($user) {
+                $query->select('client')
+                      ->from('leads')
+                      ->where('agent_id', $user->agent->id);
+            })->get();
+        } else {
+            $clients = collect();
+        }
+
+        return view('clients.index', compact('clients'));
     }
 }

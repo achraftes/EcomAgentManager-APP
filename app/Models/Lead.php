@@ -15,10 +15,9 @@ class Lead extends Model
     protected $fillable = [
         'order_id',
         'order_date',
-        'payment_method',
+        'total_charge',
         'client',
         'phone',
-        'email',
         'address',
         'product',
         'amount',
@@ -27,6 +26,7 @@ class Lead extends Model
         'quantite',       
         'upsale',         
         'comment',
+        'city',
         'agent_id'        // New field
     ];
 
@@ -64,5 +64,22 @@ class Lead extends Model
     public function upsales()
     {
         return $this->hasMany(Upsale::class);
+    }
+    public static function getStatuses()
+    {
+        return [
+            'confirmed',
+            'delivred',
+            'no response',
+            'canceled',
+            'hors zone',
+            'rdv',
+            'doublant',
+            'rappel',
+            'non traite',
+            'numero incorrect',
+            'wtsp',
+            'pas sur wtsp'
+        ];
     }
 }

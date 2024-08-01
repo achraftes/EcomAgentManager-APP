@@ -31,13 +31,12 @@ class LeadsImport implements ToModel, WithHeadingRow, WithChunkReading
             'Order ID' => $row['order_id'],
             'Order date' => $row['order_date'],
             'Nom complet' => $row['nom_complet'],
-            'Adresse Mail' => $row['adresse_mail'],
+            'City' => $row['city'],
             'Numéro de téléphone' => $row['numero_de_telephone'],
             'Adresse de livraison' => $row['adresse_de_livraison'],
-            'Méthode de paiment préféré' => $row['methode_de_paiment_prefere'],
-            'Préférences de produits' => $row['preferences_de_produits'],
-            'Historique des achats' => $row['historique_des_achats'],
-            'Comment' => $row['comment']
+            'Total charge' => $row['total_charge'],
+            'SKU' => $row['sku'],
+            'Status' => $row['status']
         ];
 
         // Convert the date if it is in Excel date format
@@ -52,13 +51,13 @@ class LeadsImport implements ToModel, WithHeadingRow, WithChunkReading
             ['full_name' => $row['Nom complet']],
             [
                 'phone' => $row['Numéro de téléphone'],
-                'email' => $row['Adresse Mail'],
+                'city' => $row['City'],
                 'address' => $row['Adresse de livraison'],
             ]
         );
 
         // Check if the product exists
-        $product = Product::where('name', $row['Préférences de produits'])->first();
+        $product = Product::where('name', $row['SKU'])->first();
 
         $amount = 0;
 
@@ -68,7 +67,7 @@ class LeadsImport implements ToModel, WithHeadingRow, WithChunkReading
         } else {
             // If the product doesn't exist, create a new product
             $product = Product::create([
-                'name' => $row['Préférences de produits'],
+                'name' => $row['SKU'],
                 'category' => 'Unknown', // Adjust as needed
                 'price' => 0, // Adjust as needed
             ]);
@@ -78,14 +77,14 @@ class LeadsImport implements ToModel, WithHeadingRow, WithChunkReading
         return new Lead([
             'order_id' => $row['Order ID'],
             'order_date' => $orderDate,
-            'payment_method' => $row['Méthode de paiment préféré'],
+            'total_charge' => $row['Total charge'],
             'client' => $row['Nom complet'],
             'phone' => $row['Numéro de téléphone'],
-            'email' => $row['Adresse Mail'],
+            'city' => $row['City'],
             'address' => $row['Adresse de livraison'],
             'product' => $product->name,
             'amount' => $amount,
-            'status' => $row['Comment'],
+            'status' => $row['Status'],
             'media_buyer_id' => $this->mediaBuyerId, // Associe le Media Buyer ID à chaque lead importé
         ]);
     }

@@ -21,6 +21,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'cp'
     ];
 
     /**
@@ -50,4 +51,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Agent::class);
     }
+    public function isAdmin()
+{
+    return $this->role === 'admin'; // Assurez-vous que le champ 'role' existe dans votre table 'users' et contient 'admin' pour les administrateurs
+}
+
 }

@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 use App\Models\Agent;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use App\Models\Lead;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AgentController extends Controller
@@ -26,24 +30,26 @@ class AgentController extends Controller
             'email' => 'required|string|email|max:255|unique:agents|unique:users',
             'password' => 'required|string|min:8|confirmed',
         ]);
-
-        // Enregistrer le mot de passe en texte clair dans la table agents
-        $agent = Agent::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
-        ]);
-
-        // Enregistrer le mot de passe haché dans la table users
-        User::create([
+    
+        // Créer l'utilisateur
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'agent',
         ]);
-
+    
+        // Créer l'agent en utilisant l'ID de l'utilisateur
+        Agent::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $user->password,
+            'user_id' => $user->id, // Utilisez l'ID de l'utilisateur ici
+        ]);
+    
         return redirect()->route('agents.index')->with('success', 'Agent created successfully.');
     }
+    
 
     public function show(Agent $agent)
     {
@@ -89,5 +95,18 @@ class AgentController extends Controller
 
         $agent->delete();
         return redirect()->route('agents.index')->with('success', 'Agent deleted successfully.');
+    }
+    public function home()
+    {
+        $user = Auth::user();
+    
+        $agent = $user->agent;
+        $today = \Carbon\Carbon::today();
+        $leads = Lead::whereDate('updated_at', $today)
+                    ->where('agent_id', $agent->id)
+                    ->whereNotNull('comment')
+                    ->get();
+    
+        return view('test.home', compact('leads'));
     }
 }

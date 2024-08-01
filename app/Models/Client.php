@@ -12,7 +12,7 @@ class Client extends Model
     protected $fillable = [
         'full_name',
         'phone',
-        'email',
+        'city',
         'address',
     ];
 

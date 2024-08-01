@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mx-auto px-4 sm:px-8">
     <div class="py-12">
-        <h2 class="text-2xl font-semibold leading-tight">{{ __('Test Page') }}</h2>
+        <h2 class="text-2xl font-semibold leading-tight">{{ __('Dashboard') }}</h2>
 
         <!-- Overview Cards -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6 mt-6">
@@ -91,7 +91,7 @@
                                         <a href="{{ route('mediaBuyers.show', $buyer->id) }}" class="text-blue-500 hover:underline">{{ $buyer->full_name }}</a>
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-200">{{ $buyer->leads_count }}</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-200">{{ $buyer->leads_sum_amount }}</td>
+                                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-200">$ {{ $buyer->leads_sum_amount }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

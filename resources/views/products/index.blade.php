@@ -5,10 +5,12 @@
     <div class="py-8">
         <div class="flex justify-between items-center">
             <h2 class="text-2xl font-semibold leading-tight">Product Page</h2>
+            @if (Auth::user()->role !== 'agent')
             <div class="flex space-x-2 items-center">
                 <a href="{{ route('products.create') }}" class="btn btn-secondary bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300">Add Product</a>
                 <a href="#" class="btn btn-primary bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-green-600 transition duration-300" id="exportLeadBtn">Export Products File</a>
             </div>
+            @endif
         </div>
         <div class="mt-6">
             <div class="overflow-x-auto">

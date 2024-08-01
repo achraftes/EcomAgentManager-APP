@@ -19,6 +19,8 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+
+
 // Dashboard Route
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -27,6 +29,8 @@ Route::resource('clients', ClientController::class);
 
 // Lead Routes
 Route::get('/leads', [LeadController::class, 'index'])->name('leads.index');
+Route::post('/leads/{id}/status', [LeadController::class, 'updateStatus'])->name('leads.updateStatus');
+Route::post('/leads/{id}/comment', [LeadController::class, 'updateComment'])->name('leads.updateComment');
 Route::get('/leads/create', [LeadController::class, 'create'])->name('leads.create');
 Route::get('/leads/{lead}/edit', [LeadController::class, 'edit'])->name('leads.edit');
 Route::put('/leads/{lead}', [LeadController::class, 'update'])->name('leads.update');
@@ -52,3 +56,10 @@ Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.ed
 
 // Agent Routes
 Route::resource('agents', AgentController::class);
+Route::get('/agent-stats', [DashboardController::class, 'showAgentSelectionForm'])->name('agents.stats.form');
+Route::post('/agent-stats', [DashboardController::class, 'agentStats'])->name('agents.stats');
+Route::get('/home', [AgentController::class, 'home'])->name('home');
+
+Route::put('/leads/{id}/updateshow', [LeadController::class, 'updateshow'])->name('leads.updateshow');
+
+Route::get('/clients/assigned', [ClientController::class, 'clientsAss'])->name('clients.assigned');
