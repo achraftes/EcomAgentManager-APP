@@ -12,6 +12,8 @@ use App\Imports\LeadsImport;
 use App\Imports\LeadsCSVImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\AgentAssigned;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 
@@ -22,17 +24,14 @@ class LeadController extends Controller
     public function index(Request $request)
     {
         $query = Lead::query();
-    
-        // Vérifier si l'utilisateur est authentifié
         $user = Auth::user();
         if ($user) {
             if ($user->role == 'agent') {
-                // Filtrer par agent si l'utilisateur est un agent
                 $query->where('agent_id', $user->agent->id);
             }
         }
     
-        // Appliquer les filtres de recherche
+
         if ($request->filled('product')) {
             $query->where('product', 'like', '%' . $request->product . '%');
         }
@@ -45,10 +44,8 @@ class LeadController extends Controller
             $query->whereDate('order_date', '<=', $request->end_date);
         }
     
-        // Trier par date de création décroissante
         $query->orderBy('created_at', 'desc');
     
-        // Récupérer les leads avec les clients associés
         $leads = $query->with('client')->get();
     
         $agents = Agent::all();
@@ -89,7 +86,7 @@ public function updateComment(Request $request, $id)
 public function create()
 {
     $agents = Agent::all();
-    $mediaBuyers = MediaBuyer::all(); // Récupérer tous les Media Buyers
+    $mediaBuyers = MediaBuyer::all();
     return view('leads.create', compact('agents', 'mediaBuyers'));
 }
 
@@ -97,7 +94,7 @@ public function store(Request $request)
     {
         $request->validate([
             'file' => 'nullable|mimes:xlsx,xls',
-            'media_buyer_id' => 'required|exists:media_buyers,id' // Ensure this validation exists
+            'media_buyer_id' => 'required|exists:media_buyers,id'
         ]);
 
         if ($request->hasFile('file')) {
@@ -204,7 +201,7 @@ public function store(Request $request)
 
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $rules = [
             'order_id' => 'required|string|max:255',
             'order_date' => 'required|date',
             'address' => 'required|string|max:255',
@@ -213,15 +210,19 @@ public function store(Request $request)
             'amount' => 'required|numeric',
             'status' => 'required|string|max:255',
             'comment' => 'nullable|string',
-            'agent_id' => 'required|exists:agents,id',
-            'products.*.produit' => 'required|exists:products,id',
-            'products.*.prix' => 'required|numeric',
-            'products.*.quantite' => 'required|integer|min:1',
-        ]);
+        ];
+    
+        if (Auth::user()->role !== 'agent') {
+            $rules['agent_id'] = 'required|exists:agents,id';
+        }
+    
+        $request->validate($rules);
+    
+        if (Auth::user()->role === 'agent') {
+            $request->merge(['agent_id' => Auth::user()->agent->id]);
+        }
     
         $lead = Lead::findOrFail($id);
-    
-        // Mettre à jour les informations du lead
         $lead->order_id = $request->order_id;
         $lead->order_date = $request->order_date;
         $lead->address = $request->address;
@@ -233,26 +234,9 @@ public function store(Request $request)
         $lead->agent_id = $request->agent_id;
         $lead->save();
     
-        // Ajouter les nouvelles upsales sans supprimer les existantes
-        if ($request->has('products')) {
-            foreach ($request->products as $product) {
-                Log::info('Adding product to upsales', [
-                    'lead_id' => $id,
-                    'product_id' => $product['produit'],
-                    'prix' => $product['prix'],
-                    'quantite' => $product['quantite'],
-                ]);
-                $upsale = Upsale::create([
-                    'lead_id' => $id,
-                    'produit' => $product['produit'], // Changed from 'product_id' to 'produit'
-                    'prix' => $product['prix'],
-                    'quantite' => $product['quantite'],
-                ]);
-            }
-        }
-    
         return redirect()->route('leads.index')->with('success', 'Lead updated successfully');
     }
+    
     
 
     
@@ -306,17 +290,22 @@ public function store(Request $request)
     }
 
     public function assign(Request $request)
-    {
-        $request->validate([
-            'agent_id' => 'required|exists:agents,id',
-            'leads' => 'required|array',
-            'leads.*' => 'exists:leads,id',
-        ]);
+{
+    $request->validate([
+        'agent_id' => 'required|exists:agents,id',
+        'leads' => 'required|array',
+        'leads.*' => 'exists:leads,id',
+    ]);
 
-        Lead::whereIn('id', $request->leads)->update(['agent_id' => $request->agent_id]);
+    Lead::whereIn('id', $request->leads)->update(['agent_id' => $request->agent_id]);
 
-        return redirect()->route('leads.index')->with('success', 'Leads assigned to agent successfully');
-    }
+    $agent = Agent::find($request->agent_id);
+    $leads = Lead::whereIn('id', $request->leads)->get();
+
+    Mail::to($agent->email)->send(new AgentAssigned($agent, $leads));
+
+    return redirect()->route('leads.index')->with('success', 'Leads assigned to agent successfully');
+}
     
 
 }

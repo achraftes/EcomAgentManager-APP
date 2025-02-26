@@ -1,49 +1,49 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-white leading-tight">
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 min-h-screen py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Overview Cards -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                    <div class="text-xl font-semibold text-gray-800 dark:text-gray-200">{{ $clientsCount }}</div>
-                    <div class="text-gray-500 dark:text-gray-400">{{ __('Clients') }}</div>
+                <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg overflow-hidden shadow-lg sm:rounded-lg p-6">
+                    <div class="text-xl font-semibold text-white">{{ $clientsCount }}</div>
+                    <div class="text-gray-200">{{ __('Clients') }}</div>
                 </div>
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                    <div class="text-xl font-semibold text-gray-800 dark:text-gray-200">{{ $mediaBuyersCount }}</div>
-                    <div class="text-gray-500 dark:text-gray-400">{{ __('Media Buyers') }}</div>
+                <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg overflow-hidden shadow-lg sm:rounded-lg p-6">
+                    <div class="text-xl font-semibold text-white">{{ $mediaBuyersCount }}</div>
+                    <div class="text-gray-200">{{ __('Media Buyers') }}</div>
                 </div>
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                    <div class="text-xl font-semibold text-gray-800 dark:text-gray-200">{{ $leadsCount }}</div>
-                    <div class="text-gray-500 dark:text-gray-400">{{ __('Leads') }}</div>
+                <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg overflow-hidden shadow-lg sm:rounded-lg p-6">
+                    <div class="text-xl font-semibold text-white">{{ $leadsCount }}</div>
+                    <div class="text-gray-200">{{ __('Leads') }}</div>
                 </div>
             </div>
 
             <!-- Recent Leads Table -->
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-6">
+            <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg overflow-hidden shadow-lg sm:rounded-lg mb-6">
                 <div class="p-6">
-                    <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">{{ __('Recent Leads') }}</h3>
+                    <h3 class="text-lg font-semibold mb-4 text-white">{{ __('Recent Leads') }}</h3>
                     <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                        <table class="min-w-full divide-y divide-gray-200">
                             <thead>
                                 <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Order ID') }}</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Client') }}</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Amount') }}</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Order Date') }}</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">{{ __('Order ID') }}</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">{{ __('Client') }}</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">{{ __('Amount') }}</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">{{ __('Order Date') }}</th>
                                 </tr>
                             </thead>
-                            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                            <tbody class="divide-y divide-gray-700">
                                 @foreach ($leads as $lead)
                                     <tr>
-                                        <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-200">{{ $lead->order_id }}</td>
-                                        <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-200">{{ $lead->client }}</td>
-                                        <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-200">{{ $lead->amount }}</td>
-                                        <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-200">{{ \Carbon\Carbon::parse($lead->order_date)->format('Y-m-d') }}</td>
+                                        <td class="px-6 py-4 text-sm text-white">{{ $lead->order_id }}</td>
+                                        <td class="px-6 py-4 text-sm text-white">{{ $lead->client }}</td>
+                                        <td class="px-6 py-4 text-sm text-white">{{ $lead->amount }}</td>
+                                        <td class="px-6 py-4 text-sm text-white">{{ \Carbon\Carbon::parse($lead->order_date)->format('Y-m-d') }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -55,39 +55,39 @@
 
             <!-- Charts -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                    <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">{{ __('Daily Sales') }}</h3>
+                <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg overflow-hidden shadow-lg sm:rounded-lg p-6">
+                    <h3 class="text-lg font-semibold mb-4 text-white">{{ __('Daily Sales') }}</h3>
                     <canvas id="dailySalesChart"></canvas>
                 </div>
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                    <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">{{ __('Monthly Sales') }}</h3>
+                <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg overflow-hidden shadow-lg sm:rounded-lg p-6">
+                    <h3 class="text-lg font-semibold mb-4 text-white">{{ __('Monthly Sales') }}</h3>
                     <canvas id="monthlySalesChart"></canvas>
                 </div>
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                    <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">{{ __('Sales by Address') }}</h3>
+                <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg overflow-hidden shadow-lg sm:rounded-lg p-6">
+                    <h3 class="text-lg font-semibold mb-4 text-white">{{ __('Sales by Address') }}</h3>
                     <canvas id="addressSalesChart"></canvas>
                 </div>
             </div>
 
             <!-- Best Media Buyers -->
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg overflow-hidden shadow-lg sm:rounded-lg">
                 <div class="p-6">
-                    <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">{{ __('Best Media Buyers') }}</h3>
+                    <h3 class="text-lg font-semibold mb-4 text-white">{{ __('Best Media Buyers') }}</h3>
                     <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                        <table class="min-w-full divide-y divide-gray-200">
                             <thead>
                                 <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Media Buyer') }}</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Total Leads') }}</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Total Sales') }}</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">{{ __('Media Buyer') }}</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">{{ __('Total Leads') }}</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">{{ __('Total Sales') }}</th>
                                 </tr>
                             </thead>
-                            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                            <tbody class="divide-y divide-gray-700">
                                 @foreach ($bestMediaBuyers as $buyer)
                                     <tr>
-                                        <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-200">{{ $buyer->name }}</td>
-                                        <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-200">{{ $buyer->leads_count }}</td>
-                                        <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-200">{{ $buyer->leads_sum_amount }}</td>
+                                        <td class="px-6 py-4 text-sm text-white">{{ $buyer->name }}</td>
+                                        <td class="px-6 py-4 text-sm text-white">{{ $buyer->leads_count }}</td>
+                                        <td class="px-6 py-4 text-sm text-white">{{ $buyer->leads_sum_amount }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -115,8 +115,8 @@
                 datasets: [{
                     label: label,
                     data: data.map(item => item.total_sales),
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
                     borderWidth: 1,
                 }],
             };

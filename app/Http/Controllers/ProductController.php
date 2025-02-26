@@ -7,20 +7,19 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    // Display a listing of the products
     public function index()
-    {
-        $products = Product::all();
-        return view('products.index', compact('products'));
-    }
+{
+    $products = Product::orderBy('created_at', 'desc')->get();
+    return view('products.index', compact('products'));
+}
 
-    // Show the form for creating a new product
+
     public function create()
     {
         return view('products.create');
     }
 
-    // Store a newly created product in storage
+
     public function store(Request $request)
     {
         $request->validate([

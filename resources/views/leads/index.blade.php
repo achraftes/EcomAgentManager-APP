@@ -64,7 +64,7 @@
                                             </td>
                                             <td class="px-6 py-4 text-center whitespace-nowrap">{{ $lead->phone }}</td>
                                             <td class="px-6 py-4 text-center whitespace-nowrap">{{ $lead->city }}</td>
-                                            <td class="px-6 py-4 text-center whitespace-nowrap">{{ $lead->amount }}</td>
+                                            <td class="px-6 py-4 text-center whitespace-nowrap">{{ $lead->total_charge }}</td>
                                             <td class="px-6 py-4 text-center whitespace-nowrap">{{ $lead->address }}</td>
                                             <td class="px-6 py-4 text-center whitespace-nowrap">
                                                 <form action="{{ route('leads.updateStatus', $lead->id) }}" method="POST">
@@ -88,9 +88,14 @@
                                             <td class="px-6 py-4 text-center whitespace-nowrap">
                                                 <form action="{{ route('leads.updateComment', $lead->id) }}" method="POST">
                                                     @csrf
-                                                    <input type="date" name="comment" class="px-2 py-1 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" onchange="this.form.submit()" value="{{ $lead->comment }}" />
+                                                    @if ($lead->status == 'rdv')
+                                                        <input type="date" name="comment" class="px-2 py-1 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" onchange="this.form.submit()" value="{{ $lead->comment }}" />
+                                                    @else
+                                                        <input type="text" name="comment" class="px-2 py-1 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" onchange="this.form.submit()" value="{{ $lead->comment }}" />
+                                                    @endif
                                                 </form>
                                             </td>
+                                            
                                             @if (Auth::user()->role !== 'agent')
                                             <td class="px-6 py-4 text-center whitespace-nowrap">{{ $lead->agent->name ?? 'N/A' }}</td>
                                             @endif

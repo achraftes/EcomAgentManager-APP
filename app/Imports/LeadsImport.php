@@ -83,7 +83,7 @@ class LeadsImport implements ToModel, WithHeadingRow, WithChunkReading
             'city' => $row['City'],
             'address' => $row['Adresse de livraison'],
             'product' => $product->name,
-            'amount' => $amount,
+            'amount' => $row['Total charge'],
             'status' => $row['Status'],
             'media_buyer_id' => $this->mediaBuyerId, // Associe le Media Buyer ID à chaque lead importé
         ]);

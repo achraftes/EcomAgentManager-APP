@@ -5,19 +5,24 @@
     <div class="container mx-auto">
         <h1 class="text-2xl font-bold text-center mb-10">Reminders for {{ \Carbon\Carbon::now()->format('l j F Y') }}</h1>
         <br>
+        @php
+            $today = \Carbon\Carbon::today()->format('Y-m-d');
+        @endphp
         @if($leads->isEmpty())
-            <p class="text-center text-gray-600">No leads with comments for today.</p>
+            <p class="text-center text-gray-600">No leads with "RDV le" status for today.</p>
         @else
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($leads as $lead)
-                    <a href="{{ route('leads.show', $lead->id) }}" class="block bg-white p-6 rounded-lg shadow-md hover:bg-gray-50 transition duration-300">
-                        <h2 class="text-xl font-semibold text-gray-800">{{ $lead->comment }}</h2>
-                        <p class="mt-4 text-gray-600">Client : {{ $lead->client }}</p>
-                        <p class="mt-4 text-gray-600">Phone : {{ $lead->phone }}</p>
-                        <p class="mt-4 text-gray-600">City : {{ $lead->city }}</p>
-                        <p class="mt-4 text-gray-600">Address : {{ $lead->address }}</p>
-                        <p class="mt-2 text-sm text-gray-400">Status : {{ $lead->status }}</p>
-                    </a>
+                    @if(\Carbon\Carbon::parse($lead->comment)->format('Y-m-d') == $today)
+                        <a href="{{ route('leads.show', $lead->id) }}" class="block bg-white p-6 rounded-lg shadow-md hover:bg-gray-50 transition duration-300">
+                            <h2 class="text-xl font-semibold text-gray-800">RDV Le {{ \Carbon\Carbon::parse($lead->comment)->format('d F Y') }}</h2>
+                            <p class="mt-4 text-gray-600">Client : {{ $lead->client }}</p>
+                            <p class="mt-4 text-gray-600">Phone : {{ $lead->phone }}</p>
+                            <p class="mt-4 text-gray-600">City : {{ $lead->city }}</p>
+                            <p class="mt-4 text-gray-600">Address : {{ $lead->address }}</p>
+                            <p class="mt-2 text-sm text-gray-400">Amount : ${{ $lead->amount }}</p>
+                        </a>
+                    @endif
                 @endforeach
             </div>
         @endif

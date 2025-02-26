@@ -9,14 +9,16 @@ use Carbon\Carbon;
 use App\Models\Lead;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Notifications\WelcomeAgent;
 
 class AgentController extends Controller
 {
     public function index()
-    {
-        $agents = Agent::all();
-        return view('agents.index', compact('agents'));
-    }
+{
+    $agents = Agent::orderBy('created_at', 'desc')->get();
+    return view('agents.index', compact('agents'));
+}
+
 
     public function create()
     {
@@ -31,24 +33,31 @@ class AgentController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
     
-        // Créer l'utilisateur
+        // Récupérer le mot de passe en clair
+        $password = $request->password;
+    
+        // Créer l'utilisateur avec le mot de passe haché
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => Hash::make($password),
             'role' => 'agent',
         ]);
     
-        // Créer l'agent en utilisant l'ID de l'utilisateur
-        Agent::create([
+        // Créer l'agent en enregistrant le mot de passe non haché
+        $agent = Agent::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $user->password,
+            'password' => $password, // Mot de passe non haché
             'user_id' => $user->id, // Utilisez l'ID de l'utilisateur ici
         ]);
     
-        return redirect()->route('agents.index')->with('success', 'Agent created successfully.');
+        // Envoyer l'email de bienvenue avec le mot de passe
+        $user->notify(new WelcomeAgent($password));
+    
+        return redirect()->route('agents.index')->with('success', 'Agent created successfully and welcome email sent.');
     }
+    
     
 
     public function show(Agent $agent)
@@ -99,14 +108,16 @@ class AgentController extends Controller
     public function home()
     {
         $user = Auth::user();
-    
         $agent = $user->agent;
         $today = \Carbon\Carbon::today();
-        $leads = Lead::whereDate('updated_at', $today)
+    
+        $leads = Lead::whereDate('comment', $today)
                     ->where('agent_id', $agent->id)
                     ->whereNotNull('comment')
+                    ->where('status', 'rdv')
                     ->get();
     
         return view('test.home', compact('leads'));
     }
+
 }

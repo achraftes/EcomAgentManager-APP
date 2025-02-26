@@ -11,23 +11,20 @@ use Carbon\Carbon;
 class MediaBuyerController extends Controller
 {
     public function index()
-    {
-        // Récupérer les Media Buyers avec leurs produits
-        $mediaBuyers = MediaBuyer::with('products')->get();
+{
+    $mediaBuyers = MediaBuyer::with('products')->orderBy('created_at', 'desc')->get();
+    return view('mediaBuyers.index', compact('mediaBuyers'));
+}
 
-        // Passer les Media Buyers à la vue
-        return view('mediaBuyers.index', compact('mediaBuyers'));
-    }
 
     public function create()
     {
-        $products = Product::all(); // Assurez-vous d'avoir un modèle Product configuré correctement
+        $products = Product::all();
         return view('mediaBuyers.create', compact('products'));
     }
 
     public function store(Request $request)
     {
-        // Validation des données
         $validatedData = $request->validate([
             'full_name' => 'required|string|max:255',
             'email' => 'required|email|unique:media_buyers,email',
