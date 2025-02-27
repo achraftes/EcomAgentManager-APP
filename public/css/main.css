@@ -2,9 +2,6 @@
 @import "tailwind/_components.css";
 @import "tailwind/_utilities.css";
 
-
-
-
 @import "_app.css";
 @import "_navbar.css";
 @import "_aside.css";
@@ -21,3 +18,5 @@
 @import "form/_checkbox-radio-switch.css";
 @import "form/_form.css";
 @import "_footer.css";
+
+

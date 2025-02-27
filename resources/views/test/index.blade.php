@@ -3,105 +3,245 @@
 @section('content')
 <div class="container mx-auto px-4 sm:px-8">
     <div class="py-12">
-        <h2 class="text-2xl font-semibold leading-tight">{{ __('Dashboard') }}</h2>
-
-        <!-- Overview Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6 mt-6">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <div class="text-xl font-semibold text-gray-800 dark:text-gray-200">{{ $clientsCount }}</div>
-                <div class="text-gray-500 dark:text-gray-400">{{ __('Clients') }}</div>
-            </div>
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <div class="text-xl font-semibold text-gray-800 dark:text-gray-200">{{ $mediaBuyersCount }}</div>
-                <div class="text-gray-500 dark:text-gray-400">{{ __('Media Buyers') }}</div>
-            </div>
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <div class="text-xl font-semibold text-gray-800 dark:text-gray-200">{{ $leadsCount }}</div>
-                <div class="text-gray-500 dark:text-gray-400">{{ __('Leads') }}</div>
-            </div>
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <div class="text-xl font-semibold text-gray-800 dark:text-gray-200">${{ $totalSales }}</div>
-                <div class="text-gray-500 dark:text-gray-400">{{ __('Total Sales') }}</div>
-            </div>
-        </div>
-
-        <!-- Recent Leads Table -->
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-6">
-            <div class="p-6">
-                <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">{{ __('Recent Leads') }}</h3>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                        <thead>
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Order ID') }}</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Client') }}</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Amount') }}</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Order Date') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                            @foreach ($leads as $lead)
-                                <tr>
-                                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-200">{{ $lead->order_id }}</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-200">{{ $lead->client }}</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-200">{{ $lead->amount }}</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-200">{{ \Carbon\Carbon::parse($lead->order_date)->format('Y-m-d') }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                {{ $leads->links() }}
-            </div>
-        </div>
-
-        <!-- Charts -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">{{ __('Daily Sales') }}</h3>
-                <canvas id="dailySalesChart"></canvas>
-            </div>
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">{{ __('Monthly Sales') }}</h3>
-                <canvas id="monthlySalesChart"></canvas>
-            </div>
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">{{ __('Sales by Address') }}</h3>
-                <canvas id="addressSalesChart"></canvas>
-            </div>
-        </div>
-
-        <!-- Best Media Buyers -->
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-            <div class="p-6">
-                <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">{{ __('Best Media Buyers') }}</h3>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                        <thead>
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Media Buyer') }}</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Total Leads') }}</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Total Sales') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                            @foreach ($bestMediaBuyers as $buyer)
-                                <tr>
-                                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-200">
-                                        <a href="{{ route('mediaBuyers.show', $buyer->id) }}" class="text-blue-500 hover:underline">{{ $buyer->full_name }}</a>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-200">{{ $buyer->leads_count }}</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-200">$ {{ $buyer->leads_sum_amount }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        <h2 class="text-3xl font-semibold leading-tight text-white"">{{ __('Admin / Dashboard') }}</h2>
     </div>
 </div>
+
+<section class="section main-section">
+    <!-- Cards statistiques -->
+    <div class="grid gap-6 grid-cols-1 md:grid-cols-4 mb-6">
+      <div class="card">
+        <div class="card-content">
+          <div class="flex items-center justify-between">
+            <div class="widget-label">
+              <h3>Clients</h3>
+              <h1>{{ $clientsCount }}</h1>
+            </div>
+            <span class="icon widget-icon text-green-500"><i class="mdi mdi-account-multiple mdi-48px"></i></span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-content">
+          <div class="flex items-center justify-between">
+            <div class="widget-label">
+              <h3>Media Buyers</h3>
+              <h1>{{ $mediaBuyersCount }}</h1>
+            </div>
+            <span class="icon widget-icon text-blue-500"><i class="mdi mdi-account-check mdi-48px"></i></span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-content">
+          <div class="flex items-center justify-between">
+            <div class="widget-label">
+              <h3>Leads</h3>
+              <h1>{{ $leadsCount }}</h1>
+            </div>
+            <span class="icon widget-icon text-purple-500"><i class="mdi mdi-lead-pencil mdi-48px"></i></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-content">
+          <div class="flex items-center justify-between">
+            <div class="widget-label">
+              <h3>Total Sales</h3>
+              <h1>${{ $totalSales }}</h1>
+            </div>
+            <span class="icon widget-icon text-red-500"><i class="mdi mdi-finance mdi-48px"></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Graphique de performance -->
+    <div class="card mb-6">
+      <header class="card-header">
+        <p class="card-header-title">
+          <span class="icon"><i class="mdi mdi-finance"></i></span>
+          Performance
+        </p>
+        <a href="#" class="card-header-icon">
+          <span class="icon"><i class="mdi mdi-reload"></i></span>
+        </a>
+      </header>
+      <div class="card-content">
+        <div class="chart-area">
+          <div class="h-full">
+            <div class="chartjs-size-monitor">
+              <div class="chartjs-size-monitor-expand"><div></div></div>
+              <div class="chartjs-size-monitor-shrink"><div></div></div>
+            </div>
+            <canvas id="big-line-chart" width="2992" height="1000" class="chartjs-render-monitor block" style="height: 400px; width: 1197px;"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section graphiques -->
+    <div class="grid gap-6 grid-cols-1 md:grid-cols-3 mb-6">
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">
+            <span class="icon"><i class="mdi mdi-chart-line"></i></span>
+            Daily Sales
+          </p>
+        </header>
+        <div class="card-content">
+          <canvas id="dailySalesChart"></canvas>
+        </div>
+      </div>
+      
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">
+            <span class="icon"><i class="mdi mdi-chart-bar"></i></span>
+            Monthly Sales
+          </p>
+        </header>
+        <div class="card-content">
+          <canvas id="monthlySalesChart"></canvas>
+        </div>
+      </div>
+      
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">
+            <span class="icon"><i class="mdi mdi-chart-pie"></i></span>
+            Sales by Address
+          </p>
+        </header>
+        <div class="card-content">
+          <canvas id="addressSalesChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="notification blue">
+      <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0">
+        <div>
+          <span class="icon"><i class="mdi mdi-buffer"></i></span>
+          <b>Recent Leads Table</b>
+        </div>
+        <button type="button" class="button small textual --jb-notification-dismiss">Dismiss</button>
+      </div>
+    </div>
+
+    <!-- Tableau des leads récents -->
+    <div class="card has-table mb-6">
+      <header class="card-header">
+        <p class="card-header-title">
+          <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
+          Recent Leads
+        </p>
+        <a href="#" class="card-header-icon">
+          <span class="icon"><i class="mdi mdi-reload"></i></span>
+        </a>
+      </header>
+      <div class="card-content">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Order ID</th>
+              <th>Client</th>
+              <th>Amount</th>
+              <th>Order Date</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach ($leads as $lead)
+            <tr>
+              <td class="image-cell">
+                <div class="image">
+                  <img src="https://avatars.dicebear.com/v2/initials/{{ strtolower(substr($lead->client, 0, 2)) }}.svg" class="rounded-full">
+                </div>
+              </td>
+              <td data-label="Order ID">{{ $lead->order_id }}</td>
+              <td data-label="Client">{{ $lead->client }}</td>
+              <td data-label="Amount">${{ $lead->amount }}</td>
+              <td data-label="Order Date">
+                <small class="text-gray-500" title="{{ \Carbon\Carbon::parse($lead->order_date)->format('M d, Y') }}">
+                  {{ \Carbon\Carbon::parse($lead->order_date)->format('M d, Y') }}
+                </small>
+              </td>
+              <td class="actions-cell">
+                <div class="buttons right nowrap">
+                  <button class="button small green --jb-modal" data-target="sample-modal-2" type="button">
+                    <span class="icon"><i class="mdi mdi-eye"></i></span>
+                  </button>
+                  <button class="button small red --jb-modal" data-target="sample-modal" type="button">
+                    <span class="icon"><i class="mdi mdi-trash-can"></i></span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+        <div class="table-pagination">
+          <div class="flex items-center justify-between">
+            {{ $leads->links() }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tableau des meilleurs Media Buyers -->
+    <div class="card has-table">
+      <header class="card-header">
+        <p class="card-header-title">
+          <span class="icon"><i class="mdi mdi-account-star"></i></span>
+          Best Media Buyers
+        </p>
+        <a href="#" class="card-header-icon">
+          <span class="icon"><i class="mdi mdi-reload"></i></span>
+        </a>
+      </header>
+      <div class="card-content">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Media Buyer</th>
+              <th>Total Leads</th>
+              <th>Total Sales</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach ($bestMediaBuyers as $buyer)
+            <tr>
+              <td class="image-cell">
+                <div class="image">
+                  <img src="https://avatars.dicebear.com/v2/initials/{{ strtolower(substr($buyer->full_name, 0, 2)) }}.svg" class="rounded-full">
+                </div>
+              </td>
+              <td data-label="Media Buyer">{{ $buyer->full_name }}</td>
+              <td data-label="Total Leads">{{ $buyer->leads_count }}</td>
+              <td data-label="Total Sales">$ {{ $buyer->leads_sum_amount }}</td>
+              <td class="actions-cell">
+                <div class="buttons right nowrap">
+                  <a href="{{ route('mediaBuyers.show', $buyer->id) }}" class="button small blue">
+                    <span class="icon"><i class="mdi mdi-eye"></i></span>
+                  </a>
+                </div>
+              </td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 @endsection
+
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -135,14 +275,61 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     };
 
+    // Daily Sales Chart
     const dailySalesCtx = document.getElementById('dailySalesChart').getContext('2d');
-    const dailySalesChart = createChart(dailySalesCtx, 'line', processData(dailySalesData, 'Daily Sales'), { scales: { y: { beginAtZero: true } } });
+    const dailySalesChart = createChart(dailySalesCtx, 'line', processData(dailySalesData, 'Daily Sales'), { 
+        scales: { y: { beginAtZero: true } },
+        responsive: true,
+        maintainAspectRatio: false
+    });
 
+    // Monthly Sales Chart
     const monthlySalesCtx = document.getElementById('monthlySalesChart').getContext('2d');
-    const monthlySalesChart = createChart(monthlySalesCtx, 'bar', processData(monthlySalesData, 'Monthly Sales'), { scales: { y: { beginAtZero: true } } });
+    const monthlySalesChart = createChart(monthlySalesCtx, 'bar', processData(monthlySalesData, 'Monthly Sales'), { 
+        scales: { y: { beginAtZero: true } },
+        responsive: true,
+        maintainAspectRatio: false
+    });
 
+    // Address Sales Chart
     const addressSalesCtx = document.getElementById('addressSalesChart').getContext('2d');
-    const addressSalesChart = createChart(addressSalesCtx, 'pie', processData(addressSalesData, 'Sales by Address'), { responsive: true });
+    const addressSalesChart = createChart(addressSalesCtx, 'pie', processData(addressSalesData, 'Sales by Address'), { 
+        responsive: true,
+        maintainAspectRatio: false
+    });
+    
+    // Big Line Chart 
+    if (document.getElementById('big-line-chart')) {
+        const bigLineCtx = document.getElementById('big-line-chart').getContext('2d');
+        const combinedData = {
+            labels: dailySalesData.map(item => item.date),
+            datasets: [{
+                label: 'Sales',
+                data: dailySalesData.map(item => item.total_sales),
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2,
+                fill: true
+            }]
+        };
+        
+        const bigLineChart = new Chart(bigLineCtx, {
+            type: 'line',
+            data: combinedData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true }
+                },
+                elements: {
+                    line: {
+                        tension: 0.4
+                    }
+                }
+            }
+        });
+    }
 });
 </script>
 @endpush
