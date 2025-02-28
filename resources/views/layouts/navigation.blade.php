@@ -14,7 +14,7 @@
       @if (Auth::user()->role !== 'agent')
         <li class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
           <a href="{{ route('dashboard') }}" class="text-white hover:text-gray-200 {{ request()->routeIs('dashboard') ? 'bg-blue-600' : '' }}">
-            <span class="icon"><i class="mdi mdi-desktop-mac"></i></span>
+            <span class="icon"><i class="mdi mdi-view-dashboard"></i></span>
             <span class="menu-item-label">Dashboard</span>
           </a>
         </li>
