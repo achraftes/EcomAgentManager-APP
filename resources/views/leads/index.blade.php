@@ -15,7 +15,10 @@
             <div class="overflow-x-auto">
                 <div class="w-full bg-white shadow-md rounded-lg overflow-hidden">
                     <div class="bg-gray-100 px-4 py-3 border-b">
-                        <h5 class="font-bold">All Leads</h5>
+                    <h5 class="font-bold flex items-center">
+                           <span class="icon mr-2"><i class="mdi mdi-chart-line"></i></span> <!-- Icône ajoutée ici -->
+                             All Leads
+                    </h5>
                         <div class="flex space-x-2 items-center">
                             <input type="text" id="searchProduct" placeholder="Search Product" class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                             <input type="date" id="searchStartDate" placeholder="Start Date" class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
