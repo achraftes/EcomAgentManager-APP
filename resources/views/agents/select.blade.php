@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mx-auto px-4 sm:px-8">
     <div class="py-12">
-        <h2 class="text-2xl font-semibold leading-tight">{{ __('Select Agent') }}</h2>
+        <h2 class="text-2xl font-semibold leading-tight text-white">{{ __('Select Agent') }}</h2>
         <div class="mt-6">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <form action="{{ route('agents.stats') }}" method="POST">

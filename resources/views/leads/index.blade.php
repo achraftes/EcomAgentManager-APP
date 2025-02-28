@@ -4,7 +4,7 @@
 <div class="container mx-auto px-4 sm:px-8">
     <div class="py-8">
         <div class="flex justify-between items-center">
-            <h2 class="text-2xl font-semibold leading-tight">Leads Page</h2>
+            <h2 class="text-2xl font-semibold leading-tight text-white">Leads Page</h2>
             @if (Auth::user()->role !== 'agent')
                 <div class="flex space-x-2 items-center">
                     <a class="btn btn-primary bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-green-600 transition duration-300" href="{{ route('leads.create') }}">Import Leads</a>
