@@ -242,6 +242,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const monthlySalesData = @json($monthlySales);
     const addressSalesData = @json($addressSales);
 
+    // Generate random colors for each address
+    const generateColors = (count) => {
+        const colors = [];
+        for (let i = 0; i < count; i++) {
+            const r = Math.floor(Math.random() * 255);
+            const g = Math.floor(Math.random() * 255);
+            const b = Math.floor(Math.random() * 255);
+            colors.push(`rgba(${r}, ${g}, ${b}, 0.6)`);
+        }
+        return colors;
+    };
+
     // Process data for charts
     const processData = (data, label) => {
         return {
@@ -249,7 +261,7 @@ document.addEventListener('DOMContentLoaded', function() {
             datasets: [{
                 label: label,
                 data: data.map(item => item.total_sales),
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                backgroundColor: label === 'Sales by Address' ? generateColors(data.length) : 'rgba(75, 192, 192, 0.2)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1,
             }],
