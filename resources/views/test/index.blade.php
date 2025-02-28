@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mx-auto px-4 sm:px-8">
     <div class="py-12">
-        <h2 class="text-3xl font-semibold leading-tight text-white"">{{ __('Admin / Dashboard') }}</h2>
+        <h2 class="text-3xl font-semibold leading-tight text-white">{{ __('Admin / Dashboard') }}</h2>
     </div>
 </div>
 

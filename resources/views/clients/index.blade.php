@@ -18,20 +18,19 @@
                         </p>
                             <input type="text" id="searchInput" placeholder="Search Clients..." class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                         </div>
-                        <div class="p-4">
-                            <table class="min-w-full divide-y divide-gray-200" id="clientTable">
-                                <thead class="bg-gray-50">
+                        <div class="card-content">
+                            <table >
+                                <thead >
                                     <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                        <th></th>
+                                        <th >Client</th>
+                                        <th>Phone</th>
+                                        <th >Address</th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
+                                <tbody >
                                     @foreach($clients as $client)
-                                        <tr class="hover:bg-gray-50 transition duration-150">
+                                        <tr >
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="flex items-center">
                                                     <img src="https://avatars.dicebear.com/v2/initials/{{ strtolower(substr($client->client, 0, 2)) }}.svg" class="h-10 w-10 rounded-full">
