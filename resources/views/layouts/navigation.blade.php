@@ -1,7 +1,11 @@
 <aside class="aside is-placed-left is-expanded">
   <div class="aside-tools">
-    <div>
-      Admin <b class="font-black">One</b>
+  <div>
+      @if (Auth::user()->role === 'admin')
+        Admin <b class="font-black">One</b>
+      @elseif (Auth::user()->role === 'agent')
+       Agent <b class="font-black">One</b>
+      @endif
     </div>
   </div>
   <div class="menu is-menu-main">
