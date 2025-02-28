@@ -22,10 +22,11 @@
                             <table >
                                 <thead >
                                     <tr>
-                                        <th></th>
-                                        <th >Client</th>
-                                        <th>Phone</th>
-                                        <th >Address</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client ID</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Full Name</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address</th>
+                                            
                                     </tr>
                                 </thead>
                                 <tbody >

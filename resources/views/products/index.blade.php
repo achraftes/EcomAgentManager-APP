@@ -4,7 +4,7 @@
 <div class="container mx-auto px-4 sm:px-8">
     <div class="py-8">
         <div class="flex justify-between items-center">
-            <h2 class="text-2xl font-semibold leading-tight">Product Page</h2>
+            <h2 class="text-2xl font-semibold leading-tight  text-white">Product Page</h2>
             @if (Auth::user()->role !== 'agent')
             <div class="flex space-x-2 items-center">
                 <a href="{{ route('products.create') }}" class="btn btn-secondary bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300">Add Product</a>
@@ -15,23 +15,25 @@
         <div class="mt-6">
             <div class="overflow-x-auto">
                 <div class="min-w-screen bg-white shadow-md rounded-lg overflow-hidden">
-                    <div class="bg-gray-100 px-4 py-3 border-b flex justify-between items-center">
-                        <h5 class="font-bold">All Products
-                          <br>  <input type="text" id="searchInput" placeholder="Search Products..." class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                <div class="bg-gray-100 px-4 py-3 border-b flex justify-between items-center">
+    <h5 class="font-bold flex items-center">  
+        <span class="icon mr-2"><i class="mdi mdi-package-variant"></i></span> 
+        All Products
+    </h5>
+    <input type="text" id="searchInput" placeholder="Search Products..." class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+</div>
 
-                        </h5>
-
-                    </div>
                     
-                    <div class="p-4">
+                    <div class="card-content">
                         <table class="min-w-full divide-y divide-gray-200" id="productTable">
                             <thead>
                                 <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product ID</th>
-                                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Product Name</th>
-                                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-                                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                   <th class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">Product ID</th>
+                                   <th class="px-6 py-3 text-center text-xs font-medium text-black uppercase tracking-wider">Product Name</th>
+                                   <th class="px-6 py-3 text-center text-xs font-medium text-black uppercase tracking-wider">Category</th>
+                                   <th class="px-6 py-3 text-center text-xs font-medium text-black uppercase tracking-wider">Price</th>
+
+                                   
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mx-auto px-4 sm:px-8">
     <div class="py-8">
-        <h2 class="text-2xl font-semibold leading-tight">Create New Product</h2>
+        <h2 class="text-2xl font-semibold leading-tight text-white">Create New Product</h2>
         <div class="mt-6">
             <div class="min-w-screen bg-white shadow-md rounded-lg p-6">
                 <form action="{{ route('products.store') }}" method="POST">
