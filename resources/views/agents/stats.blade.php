@@ -95,7 +95,7 @@
         </header>
         <div class="card-content">
             @foreach($leadsByStatus as $status => $leads)
-                <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">{{ $status }} ({{ $leads->count() }} leads)</h4>
+            <h4 class="text-lg font-semibold text-gray-200 dark:text-gray-800 mb-4">{{ $status }} ({{ $leads->count() }} leads)</h4>
                 <table>
                     <thead>
                         <tr>
@@ -116,7 +116,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                <hr class="my-4">
+                <!-- <hr class="my-4"> -->
             @endforeach
         </div>
     </div>
