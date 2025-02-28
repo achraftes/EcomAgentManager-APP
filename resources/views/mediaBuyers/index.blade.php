@@ -19,7 +19,11 @@
                             <input type="text" name="search" value="{{ request('search') }}" placeholder="Search Media Buyers" class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                             <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300">Search</button>
                         </form>
-                     <br>  <h5 class="font-bold">All Media Buyers</h5>
+                     <br>  
+                     <h5 class="font-bold flex items-center">
+                          <span class="icon mr-2"><i class="mdi mdi-account-group"></i></span> <!-- Icône ajoutée ici -->
+                         All Media Buyers
+                     </h5>
                     </div>
                     <div class="p-4">
                         <table class="min-w-full divide-y divide-gray-200">
