@@ -13,7 +13,10 @@
             <div class="overflow-x-auto">
                 <div class="min-w-screen bg-white shadow-md rounded-lg overflow-hidden">
                     <div class="bg-gray-100 px-4 py-3 border-b">
-                        <h5 class="font-bold">{{ __('All Agents') }}</h5>
+                    <h5 class="font-bold flex items-center">
+                        <span class="icon mr-2"><i class="mdi mdi-account-group"></i></span> <!-- Icône ajoutée ici -->
+                             {{ __('All Agents') }}
+                    </h5>
                     </div>
                     <div class="p-4">
                         <table class="min-w-full divide-y divide-gray-200">
