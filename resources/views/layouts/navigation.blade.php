@@ -1,10 +1,10 @@
 <aside class="aside is-placed-left is-expanded">
   <div class="aside-tools">
-  <div>
+    <div>
       @if (Auth::user()->role === 'admin')
         Admin <b class="font-black">One</b>
       @elseif (Auth::user()->role === 'agent')
-       Agent <b class="font-black">One</b>
+        Agent <b class="font-black">One</b>
       @endif
     </div>
   </div>
@@ -74,20 +74,23 @@
     <p class="menu-label text-white">User</p>
     <ul class="menu-list">
       @if (Auth::check())
-        <li>
-          <a href="#" class="text-white">
-            <span class="icon"><i class="mdi mdi-account"></i></span>
-            <span class="menu-item-label">{{ Auth::user()->name }}</span>
+        <li class="relative user-dropdown">
+          <a href="#" class="text-white hover:text-gray-200 flex items-center justify-between" onclick="toggleDropdown(event)">
+            <div>
+              <span class="icon"><i class="mdi mdi-account"></i></span>
+              <span class="menu-item-label">{{ Auth::user()->name }}</span>
+            </div>
+            <span class="icon"><i class="mdi mdi-chevron-down"></i></span>
           </a>
-        </li>
-        <li>
-          <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="text-white hover:text-gray-200 w-full text-left">
-              <span class="icon"><i class="mdi mdi-logout"></i></span>
-              <span class="menu-item-label">Log Out</span>
-            </button>
-          </form>
+          <div id="userDropdown" class="hidden absolute left-0 mt-2 w-full bg-gray-700 rounded shadow-lg z-10">
+            <form method="POST" action="{{ route('logout') }}" class="py-1">
+              @csrf
+              <button type="submit" class="text-white hover:bg-gray-600 w-full text-left px-4 py-2 flex items-center">
+                <span class="icon mr-2"><i class="mdi mdi-logout"></i></span>
+                <span>Log Out</span>
+              </button>
+            </form>
+          </div>
         </li>
       @else
         <li>
@@ -100,3 +103,21 @@
     </ul>
   </div>
 </aside>
+
+<script>
+function toggleDropdown(event) {
+  event.preventDefault();
+  const dropdown = document.getElementById('userDropdown');
+  dropdown.classList.toggle('hidden');
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(event) {
+  const dropdown = document.getElementById('userDropdown');
+  const userDropdown = document.querySelector('.user-dropdown');
+  
+  if (!userDropdown.contains(event.target) && !dropdown.classList.contains('hidden')) {
+    dropdown.classList.add('hidden');
+  }
+});
+</script>
