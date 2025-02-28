@@ -152,7 +152,6 @@
               <th>Client</th>
               <th>Amount</th>
               <th>Order Date</th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -171,25 +170,16 @@
                   {{ \Carbon\Carbon::parse($lead->order_date)->format('M d, Y') }}
                 </small>
               </td>
-              <td class="actions-cell">
-                <div class="buttons right nowrap">
-                  <button class="button small green --jb-modal" data-target="sample-modal-2" type="button">
-                    <span class="icon"><i class="mdi mdi-eye"></i></span>
-                  </button>
-                  <button class="button small red --jb-modal" data-target="sample-modal" type="button">
-                    <span class="icon"><i class="mdi mdi-trash-can"></i></span>
-                  </button>
-                </div>
-              </td>
             </tr>
             @endforeach
           </tbody>
         </table>
         <div class="table-pagination">
-          <div class="flex items-center justify-between">
-            {{ $leads->links() }}
-          </div>
-        </div>
+    <div class=" justify-center">
+        {{ $leads->links() }}
+    </div>
+</div>
+
       </div>
     </div>
 
