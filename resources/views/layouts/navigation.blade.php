@@ -12,8 +12,8 @@
     <p class="menu-label text-white">General</p>
     <ul class="menu-list">
       @if (Auth::user()->role !== 'agent')
-        <li class="--set-active-dashboard">
-          <a href="{{ route('dashboard') }}" class="text-white hover:text-gray-200">
+        <li class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
+          <a href="{{ route('dashboard') }}" class="text-white hover:text-gray-200 {{ request()->routeIs('dashboard') ? 'bg-blue-600' : '' }}">
             <span class="icon"><i class="mdi mdi-desktop-mac"></i></span>
             <span class="menu-item-label">Dashboard</span>
           </a>
@@ -23,49 +23,49 @@
     <p class="menu-label text-white">Navigation</p>
     <ul class="menu-list">
       @if (Auth::user()->role !== 'admin')
-      <li>
-        <a href="{{ route('home') }}" class="text-white hover:text-gray-200">
+      <li class="{{ request()->routeIs('home') ? 'active' : '' }}">
+        <a href="{{ route('home') }}" class="text-white hover:text-gray-200 {{ request()->routeIs('home') ? 'bg-blue-600' : '' }}">
           <span class="icon"><i class="mdi mdi-home"></i></span>
           <span class="menu-item-label">Home</span>
         </a>
       </li>
       @endif
-      <li>
-        <a href="{{ route('clients.index') }}" class="text-white hover:text-gray-200">
+      <li class="{{ request()->routeIs('clients.index') ? 'active' : '' }}">
+        <a href="{{ route('clients.index') }}" class="text-white hover:text-gray-200 {{ request()->routeIs('clients.index') ? 'bg-blue-600' : '' }}">
           <span class="icon"><i class="mdi mdi-account-group"></i></span>
           <span class="menu-item-label">Clients</span>
         </a>
       </li>
-      <li>
-        <a href="{{ route('products.index') }}" class="text-white hover:text-gray-200">
+      <li class="{{ request()->routeIs('products.index') ? 'active' : '' }}">
+        <a href="{{ route('products.index') }}" class="text-white hover:text-gray-200 {{ request()->routeIs('products.index') ? 'bg-blue-600' : '' }}">
           <span class="icon"><i class="mdi mdi-package-variant"></i></span>
           <span class="menu-item-label">Products</span>
         </a>
       </li>
       @if (Auth::user()->role !== 'agent')
-      <li>
-        <a href="{{ route('mediaBuyers.index') }}" class="text-white hover:text-gray-200">
+      <li class="{{ request()->routeIs('mediaBuyers.index') ? 'active' : '' }}">
+        <a href="{{ route('mediaBuyers.index') }}" class="text-white hover:text-gray-200 {{ request()->routeIs('mediaBuyers.index') ? 'bg-blue-600' : '' }}">
           <span class="icon"><i class="mdi mdi-shopping"></i></span>
           <span class="menu-item-label">Media Buyers</span>
         </a>
       </li>
       @endif
-      <li>
-        <a href="{{ route('leads.index') }}" class="text-white hover:text-gray-200">
+      <li class="{{ request()->routeIs('leads.index') ? 'active' : '' }}">
+        <a href="{{ route('leads.index') }}" class="text-white hover:text-gray-200 {{ request()->routeIs('leads.index') ? 'bg-blue-600' : '' }}">
           <span class="icon"><i class="mdi mdi-chart-line"></i></span>
           <span class="menu-item-label">Leads</span>
         </a>
       </li>
       @if (Auth::user()->role !== 'agent')
-      <li>
-        <a href="{{ route('agents.index') }}" class="text-white hover:text-gray-200">
+      <li class="{{ request()->routeIs('agents.index') ? 'active' : '' }}">
+        <a href="{{ route('agents.index') }}" class="text-white hover:text-gray-200 {{ request()->routeIs('agents.index') ? 'bg-blue-600' : '' }}">
           <span class="icon"><i class="mdi mdi-account-tie"></i></span>
           <span class="menu-item-label">Agents</span>
         </a>
       </li>
       @endif
-      <li>
-        <a href="{{ route('agents.stats', ['agentId' => Auth::user()->id]) }}" class="text-white hover:text-gray-200">
+      <li class="{{ request()->routeIs('agents.stats') ? 'active' : '' }}">
+        <a href="{{ route('agents.stats', ['agentId' => Auth::user()->id]) }}" class="text-white hover:text-gray-200 {{ request()->routeIs('agents.stats') ? 'bg-blue-600' : '' }}">
           <span class="icon"><i class="mdi mdi-chart-bar"></i></span>
           <span class="menu-item-label">Agent Stats</span>
         </a>
@@ -103,6 +103,15 @@
     </ul>
   </div>
 </aside>
+
+<style>
+/* You can add these styles to your CSS file */
+.menu-list li.active a {
+  font-weight: bold;
+  border-left: 4px solid #3b82f6;
+  padding-left: calc(0.75rem - 4px);
+}
+</style>
 
 <script>
 function toggleDropdown(event) {
