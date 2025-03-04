@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="{{ asset('css/custom.css') }}"> <!-- Lien vers votre fichier CSS personnalisé -->
+    
 </head>
 <body class="login-body">
     <div class="login-container">
