@@ -3,7 +3,7 @@
 @section('content')
 <section class="section main-section">
     <!-- Titre -->
-    <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-200 mb-8">Statistics for Agent: <span class="text-blue-500">{{ $agent->name }}</span></h1>
+    <h1 class="text-3xl font-bold text-gray-800 ">Statistics for Agent : <span class="text-blue-500">{{ $agent->name }}</span></h1>
 
     <!-- Cards statistiques -->
     <div class="grid gap-6 grid-cols-1 md:grid-cols-2 mb-6">
