@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mx-auto px-4 sm:px-8">
     <div class="py-8">
-        <h2 class="text-2xl font-semibold leading-tight text-white">Clients</h2>
+        <h2 class="text-2xl font-semibold leading-tight text-black">Clients</h2>
 
         @if($clients->isEmpty())
             <p class="text-gray-500 text-center mt-4">Aucun client n'est assigné à cet agent.</p>
@@ -22,21 +22,17 @@
                             <table >
                                 <thead >
                                     <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client ID</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Full Name</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-black-500 uppercase tracking-wider">Client ID</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-black-500 uppercase tracking-wider">Full Name</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-black-500 uppercase tracking-wider">Phone</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-black-500 uppercase tracking-wider">Address</th>
                                             
                                     </tr>
                                 </thead>
                                 <tbody >
                                     @foreach($clients as $client)
                                         <tr >
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="flex items-center">
-                                                    <img src="https://avatars.dicebear.com/v2/initials/{{ strtolower(substr($client->client, 0, 2)) }}.svg" class="h-10 w-10 rounded-full">
-                                                </div>
-                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">{{ $client->id }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap font-semibold text-gray-700">{{ $client->client }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap">{{ $client->phone }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap">{{ $client->address }}</td>
