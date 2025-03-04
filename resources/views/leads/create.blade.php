@@ -4,7 +4,7 @@
 <div class="container mx-auto px-4 sm:px-8">
     <div class="py-8">
         <div class="flex justify-between items-center">
-            <h3 class="text-2xl font-semibold leading-tight text-white">Add Lead</h3>
+            <h3 class="text-2xl font-semibold leading-tight text-black">Add Lead</h3>
         </div>
     </div>
     <div class="mt-6">

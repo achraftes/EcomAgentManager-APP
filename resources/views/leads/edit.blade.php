@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mx-auto px-4 sm:px-8">
     <div class="py-8">
-        <h2 class="text-2xl font-semibold leading-tight text-white">Edit Lead</h2><br>
+        <h2 class="text-2xl font-semibold leading-tight text-black">Edit Lead</h2><br>
         <div class="bg-gray-100 p-8 rounded-lg shadow-lg">
             @if ($errors->any())
                 <div class="alert alert-danger">

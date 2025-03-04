@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mx-auto px-4 sm:px-8">
     <div class="py-8">
-        <h3 class="text-2xl font-semibold leading-tight text-white">Import Leads</h3>
+        <h3 class="text-2xl font-semibold leading-tight text-black">Import Leads</h3>
     </div>
     <div class="mt-6">
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
