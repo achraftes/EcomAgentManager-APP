@@ -4,7 +4,7 @@
 <div class="container mx-auto px-4 sm:px-8">
     <div class="py-8">
         <div class="flex justify-between items-center">
-            <h2 class="text-2xl font-semibold leading-tight text-white">Add Agent</h2>
+            <h2 class="text-2xl font-semibold leading-tight text-black">Add Agent</h2>
         </div>
         <div class="mt-6">
             <div class="overflow-x-auto">

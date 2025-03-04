@@ -4,7 +4,7 @@
 <div class="container mx-auto px-4 sm:px-8">
     <div class="py-8">
         <div class="flex justify-between items-center">
-            <h2 class="text-2xl font-semibold leading-tight text-white">{{ __('Agents') }}</h2>
+            <h2 class="text-2xl font-semibold leading-tight text-black">{{ __('Agents') }}</h2>
             <div class="flex space-x-2 items-center">
                 <a href="{{ route('agents.create') }}" class="btn btn-secondary bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300">{{ __('Add Agent') }}</a>
             </div>
