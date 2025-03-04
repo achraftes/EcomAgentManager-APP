@@ -4,7 +4,7 @@
 <div class="container mx-auto px-4 sm:px-8">
 <div class="py-12">
     <h2 class="text-3xl font-semibold leading-tight text-white">
-      <span class="text-gray-400">{{ __('Admin') }}</span> / <span class="text-white">{{ __('Dashboard') }}</span>
+      <span class="text-gray-400">{{ __('Admin') }}</span> <span class="text-black">/</span>  <span class="text-black">{{ __('Dashboard') }}</span>
     </h2>
 </div>
 </div>
