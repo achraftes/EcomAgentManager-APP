@@ -9,12 +9,11 @@
 </head>
 <body class="login-body">
     <div class="login-container">
-        <!-- Image (left side) -->
         <div class="login-image">
             <!-- Background image only -->
         </div>
         
-        <!-- Login form (right side) -->
+        
         <div class="login-form">
             <div class="form-wrapper">
                 <header class="form-header">
@@ -22,7 +21,7 @@
                         <span class="icon"><i class="mdi mdi-lock"></i></span>
                         Login
                     </p>
-                </header>
+                </header> <br> <br>
                 
                 <!-- Laravel Auth Form -->
                 <form method="POST" action="{{ route('login') }}">
@@ -41,7 +40,7 @@
                         <p class="input-hint">
                             Please enter your Email
                         </p>
-                    </div>
+                    </div> <br>
                     
                     <!-- Password -->
                     <div class="form-group">
@@ -56,7 +55,7 @@
                         <p class="input-hint">
                             Please enter your password
                         </p>
-                    </div>
+                    </div> <br>
                     
                     <!-- Remember Me -->
                     <div class="form-group">
