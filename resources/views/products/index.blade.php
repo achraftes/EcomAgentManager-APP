@@ -28,10 +28,10 @@
                         <table class="min-w-full divide-y divide-gray-200" id="productTable">
                             <thead>
                                 <tr>
-                                   <th class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">Product ID</th>
-                                   <th class="px-6 py-3 text-center text-xs font-medium text-black uppercase tracking-wider">Product Name</th>
-                                   <th class="px-6 py-3 text-center text-xs font-medium text-black uppercase tracking-wider">Category</th>
-                                   <th class="px-6 py-3 text-center text-xs font-medium text-black uppercase tracking-wider">Price</th>
+                                   <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product ID</th>
+                                   <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product Name</th>
+                                   <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                                   <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"Price</th>
 
                                    
                                 </tr>
