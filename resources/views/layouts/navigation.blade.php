@@ -1,7 +1,7 @@
 <aside class="aside is-placed-left is-expanded">
   <div class="aside-tools">
   <div class="flex items-center">
-      <img src="{{ asset('img/examples/Depositphotos.jpeg') }}" alt="Logo" class="h-10 w-10 mr-2"> 
+      
       
     <div>
       @if (Auth::user()->role === 'admin')

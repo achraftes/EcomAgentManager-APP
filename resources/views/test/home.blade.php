@@ -10,7 +10,6 @@
         @endphp
 
         @if($leads->isEmpty())
-            <!-- Section avec une grande image de fond qui couvre toute la largeur et la hauteur -->
             <div class="relative w-full h-screen overflow-hidden shadow-md">
                 <img src="{{ asset('img/examples/exemple13.jpg') }}" alt="Background Image" class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center">
