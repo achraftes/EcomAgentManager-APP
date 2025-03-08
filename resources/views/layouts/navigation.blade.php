@@ -1,18 +1,17 @@
 <aside class="aside is-placed-left is-expanded">
   <div class="aside-tools">
-  <div class="flex items-center">
-      
-      
-    <div>
-      @if (Auth::user()->role === 'admin')
-        Admin <b class="font-black">One</b>
-      @elseif (Auth::user()->role === 'agent')
-        Agent <b class="font-black">One</b>
-      @endif
+    <div class="flex items-center">
+      <div>
+        @if (Auth::user()->role === 'admin')
+          Admin <b class="font-black">One</b>
+        @elseif (Auth::user()->role === 'agent')
+          Agent <b class="font-black">One</b>
+        @endif
+      </div>
     </div>
   </div>
-</div>
   <div class="menu is-menu-main">
+    <!-- Section General -->
     <p class="menu-label text-white">General</p>
     <ul class="menu-list">
       @if (Auth::user()->role !== 'agent')
@@ -24,8 +23,10 @@
         </li>
       @endif
     </ul>
+
+    <!-- Section Navigation -->
     <p class="menu-label text-white">Navigation</p>
-    <ul class="menu-list">
+    <ul class="menu-list mb-12"> <!-- Ajout de mb-6 pour l'espace -->
       @if (Auth::user()->role !== 'admin')
       <li class="{{ request()->routeIs('home') ? 'active' : '' }}">
         <a href="{{ route('home') }}" class="text-white hover:text-gray-200 {{ request()->routeIs('home') ? 'bg-blue-600' : '' }}">
@@ -75,6 +76,8 @@
         </a>
       </li>
     </ul>
+
+    <!-- Section User -->
     <p class="menu-label text-white">User</p>
     <ul class="menu-list">
       @if (Auth::check())
@@ -109,7 +112,7 @@
 </aside>
 
 <style>
-/* You can add these styles to your CSS file */
+/* Styles pour les éléments actifs */
 .menu-list li.active a {
   font-weight: bold;
   border-left: 4px solid #3b82f6;
@@ -118,13 +121,14 @@
 </style>
 
 <script>
+// Fonction pour basculer l'affichage du dropdown
 function toggleDropdown(event) {
   event.preventDefault();
   const dropdown = document.getElementById('userDropdown');
   dropdown.classList.toggle('hidden');
 }
 
-// Close dropdown when clicking outside
+// Fermer le dropdown si l'utilisateur clique en dehors
 document.addEventListener('click', function(event) {
   const dropdown = document.getElementById('userDropdown');
   const userDropdown = document.querySelector('.user-dropdown');
