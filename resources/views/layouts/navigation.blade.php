@@ -1,6 +1,10 @@
 <aside class="aside is-placed-left is-expanded">
   <div class="aside-tools">
     <div class="flex items-center">
+      <!-- Logo -->
+      <div class="mr-4">
+        <img src="{{ asset('img/examples/exemple13.jpg') }}" alt="Logo" class="h-10 w-10"> <!-- Ajustez la taille selon vos besoins -->
+      </div>
       <div>
         @if (Auth::user()->role === 'admin')
           Admin <b class="font-black">One</b>
