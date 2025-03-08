@@ -3,7 +3,7 @@
     <div class="flex items-center">
       <!-- Logo -->
       <div class="mr-4">
-        <img src="{{ asset('img/examples/exemple13.jpg') }}" alt="Logo" class="h-10 w-10"> <!-- Ajustez la taille selon vos besoins -->
+        <img src="{{ asset('img/examples/shopping.jpg') }}" alt="Logo" class="h-10 w-10"> <!-- Ajustez la taille selon vos besoins -->
       </div>
       <div>
         @if (Auth::user()->role === 'admin')
