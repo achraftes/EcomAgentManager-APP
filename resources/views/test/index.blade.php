@@ -118,8 +118,8 @@
             Sales by Address
           </p>
         </header>
-        <div class="card-content">
-          <canvas id="addressSalesChart"></canvas>
+        <div class="card-content" style="height: 400px; overflow-y: auto;"> <!-- Ajustement de la hauteur et ajout du défilement -->
+          <canvas id="addressSalesChart" style="height: 100%;"></canvas> <!-- Ajustement de la hauteur du canvas -->
         </div>
       </div>
     </div>
@@ -177,11 +177,10 @@
           </tbody>
         </table>
         <div class="table-pagination">
-    <div class=" justify-center">
-        {{ $leads->links() }}
-    </div>
-</div>
-
+          <div class="justify-center">
+              {{ $leads->links() }}
+          </div>
+        </div>
       </div>
     </div>
 
@@ -233,7 +232,6 @@
     </div>
   </section>
 @endsection
-
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -295,13 +293,23 @@ document.addEventListener('DOMContentLoaded', function() {
         maintainAspectRatio: false
     });
 
-    // Address Sales Chart
+    // Address Sales Chart (Pie Chart)
     const addressSalesCtx = document.getElementById('addressSalesChart').getContext('2d');
     const addressSalesChart = createChart(addressSalesCtx, 'pie', processData(addressSalesData, 'Sales by Address'), { 
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'bottom', // Position de la légende
+                labels: {
+                    font: {
+                        size: 12 // Taille de la police pour les étiquettes
+                    }
+                }
+            }
+        }
     });
-    
+
     // Big Line Chart 
     if (document.getElementById('big-line-chart')) {
         const bigLineCtx = document.getElementById('big-line-chart').getContext('2d');
